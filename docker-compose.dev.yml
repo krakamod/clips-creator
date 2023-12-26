@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile.dev
+    ports:
+      - 5173:5173
+    volumes:
+      - ./src:/app/src
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./index.html:/app/index.html
+
+  api:
+    build:
+      dockerfile: Dockerfile.server.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/app/server
+      - ./tsconfig.server.json:/app/tsconfig.server.json
