@@ -23,7 +23,8 @@
 
     "paths": {
       "@shared/*": ["./shared/*"],
-      "@modules/*": ["./modules/*"]
+      "@modules/*": ["./modules/*"],
+      "@components/*": ["./components/*"]
     },
     "types": ["vite/client", "vitest/globals"]
   },
