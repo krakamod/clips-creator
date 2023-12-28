@@ -3,6 +3,8 @@ import MUITextField from '@mui/material/TextField';
 import MenuItem from '../MenuItem';
 import { styled } from '../../styles';
 
+export const emptySelectValue = 'none';
+
 const PlaceholderMenuItem = styled(MenuItem)(() => ({
   display: 'none',
 }));
@@ -66,7 +68,9 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
       name={name}
       label={label}
       placeholder={placeholder}
-      defaultValue={isSelectWithPlaceholder && defaultValue == null ? 'none' : defaultValue}
+      defaultValue={isSelectWithPlaceholder && (defaultValue == null)
+        ? emptySelectValue
+        : defaultValue}
       value={value}
       error={error}
       helperText={helperText}
@@ -80,7 +84,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
       ref={ref}
     >
       {isSelectWithPlaceholder && (
-        <PlaceholderMenuItem value="none">
+        <PlaceholderMenuItem value={emptySelectValue}>
           {placeholder}
         </PlaceholderMenuItem>
       )}

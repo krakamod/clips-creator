@@ -1,1 +1,1 @@
-export { default } from './TextField';
+export { default, emptySelectValue } from './TextField';

@@ -1,5 +1,8 @@
 import ffmpegStatic from 'ffmpeg-static';
 import ffmpeg, { type FfmpegCommand } from 'fluent-ffmpeg';
+import path from 'path';
+
+import { type IBrandKit } from '../modules/brandKit/IBrandKit';
 
 ffmpeg.setFfmpegPath(ffmpegStatic as string);
 
@@ -28,7 +31,7 @@ export class VideoConverter {
       {
         filter: 'drawtext',
         options: {
-          fontfile: 'fonts/OpenSans.ttf',
+          fontfile: path.join(__dirname, 'fonts', 'OpenSans.ttf'),
           text,
           fontsize: 32,
           fontcolor: '#FF00F2',
@@ -44,10 +47,7 @@ export class VideoConverter {
   public async createOutro ({
     name,
     text,
-  }: {
-    name: string;
-    text: string;
-  }): Promise<void> {
+  }: IBrandKit): Promise<void> {
     await new Promise((resolve, reject) => {
       this.ffmpeg
         .input(this.backgroundPath)
@@ -59,7 +59,7 @@ export class VideoConverter {
         .videoCodec(this.videoCodec)
         .addOption('-x264opts', this.x264Options)
         .outputOptions('-b:v', this.videoBitrates[0])
-        .output(`${this.directory}/${name}.mp4`)
+        .output(path.join(__dirname, '..', this.directory, `${name}.mp4`))
         .on('end', () => {
           // eslint-disable-next-line no-console
           console.log('Video creation finished!');
