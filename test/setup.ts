@@ -1,6 +1,6 @@
-import { expect, afterEach } from 'vitest';
+import { type expect, afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
-import matchers from '@testing-library/jest-dom/matchers';
+import '@testing-library/jest-dom/vitest';
 import type { TestingLibraryMatchers } from '@testing-library/jest-dom/matchers';
 
 type CustomMatchers<R = unknown> = TestingLibraryMatchers<typeof expect, R>;
@@ -16,7 +16,7 @@ declare global {
 class FormDataMock {
   data: Record<string, Array<string | Blob> | undefined> = {};
 
-  append (name: string, value: string | Blob, fileName?: string): void {
+  append (name: string, value: string | Blob, _fileName?: string): void {
     if (this.data[name] != null) {
       this.data[name]?.push(value);
     } else {
@@ -50,9 +50,6 @@ class FormDataMock {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore
 global.FormData = FormDataMock;
-
-// extends Vitest's expect method with methods from react-testing-library
-expect.extend(matchers);
 
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {

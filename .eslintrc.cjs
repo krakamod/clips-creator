@@ -34,6 +34,7 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 2 }],
     semi: 'off',
     '@typescript-eslint/semi': ['error', 'always'],
+    '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     '@typescript-eslint/member-delimiter-style': ['error', {
       multiline: {
         delimiter: 'semi',
