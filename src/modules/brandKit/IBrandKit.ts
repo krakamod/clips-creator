@@ -1,3 +1,4 @@
-export interface IBrandKit {
+export interface IWIPBrandKitOutro {
   name: string;
+  callToAction: string;
 }

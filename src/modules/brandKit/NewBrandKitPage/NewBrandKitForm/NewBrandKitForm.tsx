@@ -3,7 +3,7 @@ import { useForm, Controller, type SubmitHandler, FormProvider } from 'react-hoo
 
 import Typography from '@shared/ui-kit/components/Typography';
 import Stack from '@shared/ui-kit/components/Stack';
-import TextField from '@shared/ui-kit/components/TextField';
+import TextField, { emptySelectValue } from '@shared/ui-kit/components/TextField';
 import Divider from '@shared/ui-kit/components/Divider';
 import Button from '@shared/ui-kit/components/Button';
 import { styled } from '@shared/ui-kit/styles';
@@ -12,6 +12,7 @@ import Tabs from './Tabs';
 import OutroTabPanel from './OutroTabPanel';
 import { Fieldset, type IFieldset } from './Fieldset';
 import { fillWithDefaultValues } from './values';
+import useController, { Status } from '../../controller';
 
 const Body = styled(Stack)(({ theme }) => ({
   paddingTop: theme.spacing(5.5),
@@ -19,15 +20,23 @@ const Body = styled(Stack)(({ theme }) => ({
 }));
 
 const NewBrandKitFrom: React.FC = () => {
+  const { status, controller } = useController();
+
   const methods = useForm<IFieldset>({
     defaultValues: fillWithDefaultValues(),
   });
   const { handleSubmit, formState: { errors }, control } = methods;
 
   const onSubmit: SubmitHandler<IFieldset> = useCallback((data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-  }, []);
+    const callToAction: string = (data.callToAction !== emptySelectValue)
+      ? data.callToAction
+      : data.customCallToAction;
+
+    void controller.createOutro({
+      name: data.name,
+      callToAction,
+    });
+  }, [controller]);
 
   return (
     <Stack spacing={3} component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -61,7 +70,12 @@ const NewBrandKitFrom: React.FC = () => {
 
       <Divider />
 
-      <Button type="submit">Save</Button>
+      <Button
+        type="submit"
+        loading={status === Status.Pending}
+      >
+        Save
+      </Button>
     </Stack>
   );
 };
