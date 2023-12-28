@@ -7,9 +7,11 @@ interface IFormFieldsetProps {
 const FormFieldset: React.FC<IFormFieldsetProps> = ({
   children,
 }) => (
-  <Grid container spacing={6}>
-    {children}
-  </Grid>
+  <div>
+    <Grid container spacing={6}>
+      {children}
+    </Grid>
+  </div>
 );
 
 export default FormFieldset;

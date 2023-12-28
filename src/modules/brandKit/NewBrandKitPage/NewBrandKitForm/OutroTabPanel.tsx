@@ -1,16 +1,23 @@
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import Stack from '@shared/ui-kit/components/Stack';
+import Typography from '@shared/ui-kit/components/Typography';
 import TextField, { emptySelectValue } from '@shared/ui-kit/components/TextField';
 import MenuItem from '@shared/ui-kit/components/MenuItem';
 import Tooltip from '@shared/ui-kit/components/Tooltip';
 import IconButton from '@shared/ui-kit/components/IconButton';
 import InfoIcon from '@shared/ui-kit/icons/InfoIcon';
+import { styled } from '@shared/ui-kit/styles';
 
 import TabPanel from './TabPanel';
 import FormFieldset from './FormFieldset';
 import FormField from './FormField';
 import { Fieldset, type IFieldset } from './Fieldset';
+
+const TextareaContainer = styled(Stack)(() => ({
+  width: '100%',
+}));
 
 const predefinedCallToActions = [{
   id: '1',
@@ -91,16 +98,30 @@ const OutroTabPanel: React.FC = () => {
               <Controller
                 name={Fieldset.CustomCallToAction}
                 render={({ field }) => (
-                  <TextField
-                    placeholder="The Most Amazing Podcast Ever!"
-                    multiline
-                    rows={3}
-                    error={Boolean(errors[Fieldset.CustomCallToAction])}
-                    helperText={errors[Fieldset.CustomCallToAction]?.message}
-                    {...field}
-                  />
+                  <TextareaContainer spacing={1}>
+                    <TextField
+                      width="full"
+                      placeholder="The Most Amazing Podcast Ever!"
+                      multiline
+                      rows={4}
+                      error={Boolean(errors[Fieldset.CustomCallToAction])}
+                      helperText={errors[Fieldset.CustomCallToAction]?.message}
+                      {...field}
+                    />
+                    <Typography
+                      color="text.secondary"
+                      variant="body2"
+                      align="right"
+                    >
+                      {field.value.length}/5000
+                    </Typography>
+                  </TextareaContainer>
                 )}
                 rules={{
+                  maxLength: {
+                    value: 5000,
+                    message: 'Max length is 5000 characters',
+                  },
                   validate: value =>
                     (value !== '') || (callToAction !== emptySelectValue)
                       ? true

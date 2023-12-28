@@ -15,7 +15,7 @@ import { fillWithDefaultValues } from './values';
 import useController, { Status } from '../../controller';
 
 const Body = styled(Stack)(({ theme }) => ({
-  paddingTop: theme.spacing(5.5),
+  paddingTop: theme.spacing(4.5),
   paddingBottom: theme.spacing(1),
 }));
 
@@ -41,7 +41,7 @@ const NewBrandKitFrom: React.FC = () => {
   return (
     <Stack spacing={3} component="form" onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={4.5} direction="row" alignItems="center">
-        <Typography variant="h4">
+        <Typography variant="h5">
           Brand kit name
         </Typography>
 
@@ -50,6 +50,7 @@ const NewBrandKitFrom: React.FC = () => {
           control={control}
           render={({ field }) => (
             <TextField
+              width="large"
               placeholder="Name"
               error={Boolean(errors[Fieldset.Name])}
               helperText={errors[Fieldset.Name]?.message}
@@ -60,7 +61,7 @@ const NewBrandKitFrom: React.FC = () => {
         />
       </Stack>
 
-      <Body spacing={2} direction="row">
+      <Body spacing={5} direction="row">
         <Tabs />
 
         <FormProvider {...methods}>
@@ -70,12 +71,14 @@ const NewBrandKitFrom: React.FC = () => {
 
       <Divider />
 
-      <Button
-        type="submit"
-        loading={status === Status.Pending}
-      >
-        Save
-      </Button>
+      <div>
+        <Button
+          type="submit"
+          loading={status === Status.Pending}
+        >
+          Save
+        </Button>
+      </div>
     </Stack>
   );
 };

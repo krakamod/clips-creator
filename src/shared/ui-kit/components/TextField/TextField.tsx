@@ -17,12 +17,31 @@ enum Variant {
   Outlined = 'outlined',
 }
 
+enum Width {
+  Medium = 'medium',
+  Large = 'large',
+  Full = 'full',
+}
+
+const widthStylesMap = {
+  [Width.Medium]: {},
+  [Width.Large]: {
+    minWidth: 256,
+  },
+  [Width.Full]: {},
+};
+
+const StyledTextField = styled(MUITextField, {
+  shouldForwardProp: (prop) => prop !== 'width',
+})<{ width: `${Width}` }>(({ width }) => widthStylesMap[width]);
+
 interface TextFieldProps {
   children?: React.ReactNode;
   className?: string;
   type?: `${Type}`;
   name?: string;
   variant?: `${Variant}`;
+  width?: `${Width}`;
   label?: string;
   placeholder?: string;
   defaultValue?: string;
@@ -44,6 +63,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
   type = Type.Text,
   name,
   variant = Variant.Outlined,
+  width = Width.Medium,
   label,
   placeholder,
   defaultValue,
@@ -61,9 +81,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
   const isSelectWithPlaceholder = (select ?? false) && (placeholder != null);
 
   return (
-    <MUITextField
+    <StyledTextField
       className={className}
       variant={variant}
+      width={width}
+      fullWidth={width === Width.Full}
       type={type}
       name={name}
       label={label}
@@ -89,7 +111,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(({
         </PlaceholderMenuItem>
       )}
       {children}
-    </MUITextField>
+    </StyledTextField>
   );
 });
 

@@ -5,7 +5,7 @@ import Tab from '@shared/ui-kit/components/Tab';
 
 const Tabs: React.FC = () => {
   return (
-    <UiKitTabs orientation="vertical" value={2}>
+    <UiKitTabs orientation="vertical" value={3}>
       <Tab label="Texts" />
       <Tab label="Logo" />
       <Tab label="Outro" />

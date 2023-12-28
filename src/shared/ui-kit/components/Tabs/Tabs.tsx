@@ -1,4 +1,14 @@
 import MUITabs from '@mui/material/Tabs';
+import { styled } from '../../styles';
+
+const Line = styled('div')(({ theme }) => ({
+  height: `calc(100% - ${theme.spacing(2)})`,
+  width: 1,
+  position: 'absolute',
+  top: theme.spacing(1),
+  backgroundColor: '#E1E1E1',
+  transform: 'translateX(0.5px)',
+}));
 
 enum Orientation {
   Horizontal = 'horizontal',
@@ -28,6 +38,7 @@ const Tabs: React.FC<TabsProps> = ({
     onChange={onChange}
     {...rest}
   >
+    <Line />
     {children}
   </MUITabs>
 );
