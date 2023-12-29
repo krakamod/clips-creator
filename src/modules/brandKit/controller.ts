@@ -11,7 +11,7 @@ export enum Status {
   Error = 'error',
 }
 
-class BrandKitController {
+export class BrandKitController {
   private readonly brandKitApi: IBrandKitApi;
   private readonly setStatus: (status: Status) => void;
 

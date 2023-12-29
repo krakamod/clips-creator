@@ -13,6 +13,7 @@ First, run the development server:
   # or
   yarn install
   yarn dev
+  yarn server
 ```
 
 Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.

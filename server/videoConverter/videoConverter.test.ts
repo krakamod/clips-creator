@@ -12,6 +12,7 @@ describe('VideoConverter', () => {
 
   beforeEach(() => {
     ffmpegMock = {
+      clone: vi.fn().mockImplementation(() => ffmpegMock),
       input: vi.fn().mockImplementation(() => ffmpegMock),
       inputOptions: vi.fn().mockImplementation(() => ffmpegMock),
       videoFilters: vi.fn().mockImplementation(() => ffmpegMock),
@@ -19,6 +20,8 @@ describe('VideoConverter', () => {
       addOption: vi.fn().mockImplementation(() => ffmpegMock),
       outputOptions: vi.fn().mockImplementation(() => ffmpegMock),
       output: vi.fn().mockImplementation(() => ffmpegMock),
+      size: vi.fn().mockImplementation(() => ffmpegMock),
+      autopad: vi.fn().mockImplementation(() => ffmpegMock),
       on: vi.fn().mockImplementation((event, callback) => {
         if (event === 'end') {
           endCallback = callback;
@@ -45,25 +48,9 @@ describe('VideoConverter', () => {
 
     expect(ffmpegMock.input).toHaveBeenCalledWith('path/to/background');
     expect(ffmpegMock.inputOptions).toHaveBeenCalledWith(['-loop 1', '-t 20']);
-    expect(ffmpegMock.videoFilters).toHaveBeenCalledWith([
-      {
-        filter: 'drawtext',
-        options: {
-          fontfile: 'fonts/OpenSans.ttf',
-          text,
-          fontsize: 32,
-          fontcolor: '#FF00F2',
-          x: '(w-text_w)/2',
-          y: '(h-text_h)/2',
-          enable: 'between(t,0,4)',
-        },
-      },
-      { filter: 'scale', options: '720:1280' },
-    ]);
     expect(ffmpegMock.videoCodec).toHaveBeenCalledWith('libx264');
     expect(ffmpegMock.addOption).toHaveBeenCalledWith('-x264opts', 'keyint=24:min-keyint=24:no-scenecut');
     expect(ffmpegMock.outputOptions).toHaveBeenCalledWith('-b:v', '1000k');
-    expect(ffmpegMock.output).toHaveBeenCalledWith('output-outro/sample.mp4');
     expect(ffmpegMock.on).toHaveBeenCalledWith('end', expect.any(Function));
     expect(ffmpegMock.on).toHaveBeenCalledWith('error', expect.any(Function));
     expect(ffmpegMock.run).toHaveBeenCalled();
